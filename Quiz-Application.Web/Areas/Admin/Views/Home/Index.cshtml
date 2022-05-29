@@ -1,0 +1,17 @@
+﻿@model List<QuestionAndChoises>
+@{
+    Layout = "_Layout";
+}
+<!-- Content Wrapper. Contains page content -->
+
+@foreach(var question in Model)
+{
+    <h1>@question.QuestionId</h1>
+    <h1>@question.Question</h1>
+    @foreach(var choice in question.Choices)
+    {
+        <li>@choice.DisplayText</li>
+    }
+
+}
+
