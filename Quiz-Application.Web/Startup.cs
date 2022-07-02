@@ -44,11 +44,11 @@ namespace Quiz_Application.Web
             services.AddIdentity<Candidate, IdentityRole>().AddEntityFrameworkStores<QuizDBContext>().AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
             {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
 
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -58,18 +58,14 @@ namespace Quiz_Application.Web
                 options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   options.LoginPath = "/account/login";
+                   options.ExpireTimeSpan = TimeSpan.FromHours(20);
+                   options.Cookie.IsEssential = true;
+               });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.Cookie = new CookieBuilder
-                {
-                    HttpOnly = true,
-                    Name = ".Vacation.Security.Cookie",
-                    SameSite = SameSiteMode.Strict
-                };
-            });
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();

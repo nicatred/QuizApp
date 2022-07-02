@@ -1,6 +1,6 @@
 ﻿@model Quiz_Application.Web.Models.ProfileViewModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Hesab";
 }
 
 <style>
@@ -166,14 +166,14 @@
                         <b class="w3-text-blue">Edit profile picture</b>
                         <div class="file-upload">
                             <div class="file-select">
-                                <div class="file-select-button" id="fileName">Choose File</div>
-                                <div class="file-select-name" id="noFile">No file chosen...</div>
+                                <div class="file-select-button" id="fileName">Sənəd seçin</div>
+                                <div class="file-select-name" id="noFile">Sənəd seçilməyib</div>
                                 <input id="chooseFile" asp-for="file" onchange="ShowImagePreview(this);" accept="image/*">
                             </div>
                         </div>
                     </p>
                     <hr />
-                    <p><button type="submit" class="w3-button w3-block w3-blue"><i class="fa fa-save"></i> Save</button></p>
+                    <p><button type="submit" class="w3-button w3-block w3-blue"><i class="fa fa-save"></i> Yadda saxla</button></p>
                 </form>
                 <br />
             </div>

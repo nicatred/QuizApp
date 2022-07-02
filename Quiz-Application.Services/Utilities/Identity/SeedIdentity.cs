@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Quiz_Application.Services.Entities;
 using System;
@@ -13,12 +14,19 @@ namespace Quiz_Application.Services.Utilities.Identity
     {
         public static async Task Seed(UserManager<Candidate> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
-            
+
+            var roles = await roleManager.Roles.ToListAsync();
+            if (!roles.Contains(new IdentityRole("candidate")))
+            {
+                var resultaa = await roleManager.CreateAsync(new IdentityRole("candidate"));
+            }
+            await roleManager.CreateAsync(new IdentityRole("teacher"));
+
             var username = configuration["Data:AdminUser:username"];
             var email = configuration["Data:AdminUser:email"];
             var password = configuration["Data:AdminUser:password"];
             var role = configuration["Data:AdminUser:role"];
-
+            
             if (await userManager.FindByNameAsync(username) == null)
             {
                 await roleManager.CreateAsync(new IdentityRole(role));
@@ -29,7 +37,8 @@ namespace Quiz_Application.Services.Utilities.Identity
                     Email = email,
                     Name = "admin",
                     Candidate_ID = "admin",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    Surname="admin"
                 };
 
 

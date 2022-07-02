@@ -20,20 +20,22 @@ namespace Quiz_Application.Web.Controllers
     [Authorize(Roles = "candidate")]
     public class ScoreController : Controller
     {
-       private readonly IConverter _converter;
-       private readonly ILogger<ScoreController> _logger;
-       private readonly IResult<Services.Entities.Result> _result;
-       private readonly ICandidate<Services.Entities.Candidate> _candidate;
+        private readonly IConverter _converter;
+        private readonly ILogger<ScoreController> _logger;
+        private readonly IResult<Services.Entities.Result> _result;
+        private readonly ICandidate<Services.Entities.Candidate> _candidate;
+        private readonly IExam<Services.Entities.Exam> _exam;
 
-        public ScoreController(ILogger<ScoreController> logger, IResult<Services.Entities.Result> result, IConverter converter, ICandidate<Candidate> candidate)
+        public ScoreController(ILogger<ScoreController> logger, IResult<Services.Entities.Result> result, IConverter converter, ICandidate<Candidate> candidate, IExam<Exam> exam)
         {
             _logger = logger;
             _result = result;
             _converter = converter;
             _candidate = candidate;
+            _exam = exam;
         }
         public async Task<IActionResult> Result()
-       {
+        {
             try
             {
                 //Candidate _objCandidate = HttpContext.Session.GetObjectFromJson<Candidate>("AuthenticatedUser");
@@ -44,17 +46,21 @@ namespace Quiz_Application.Web.Controllers
 
 
                 IEnumerable<QuizAttempt> _obj = await _result.GetAttemptHistory(_objCandidate.Candidate_ID);
-                Root objRoot = new Root(){
-                    objCandidate= _objCandidate,
-                    objAttempt = _obj.ToList() 
-                };               
+
+              
+
+                Root objRoot = new Root()
+                {
+                    objCandidate = _objCandidate,
+                    objAttempt = _obj.ToList()
+                };
                 return View(objRoot);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex.InnerException);
             }
-            finally 
+            finally
             {
             }
         }
@@ -83,7 +89,7 @@ namespace Quiz_Application.Web.Controllers
         {
             ResPDF obj = null;
             try
-            {                
+            {
                 string html = await _result.GetCertificateString(argPDFRpt);
                 string UploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles/Report");
                 string UniqueFileName = argPDFRpt.CandidateID + "_Certificate.pdf";
@@ -116,13 +122,25 @@ namespace Quiz_Application.Web.Controllers
             {
                 obj.IsSuccess = false;
                 obj.Path = null;
-                throw new Exception(ex.Message, ex.InnerException);                 
+                throw new Exception(ex.Message, ex.InnerException);
             }
             finally
             {
             }
             return Json(obj);
         }
-                
+
+
+        public async Task<IActionResult> GetSertificate()
+        {
+            var identity = HttpContext.User.Identity.Name;
+            IQueryable<Candidate> iqCandidate = await _candidate.SearchCandidate(e => e.UserName.Equals(identity));
+            Candidate _objCandidate = iqCandidate.FirstOrDefault();
+
+            string UploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles/Report");
+            string UniqueFileName = _objCandidate.Candidate_ID + "_Certificate.pdf";
+            string UploadPath = Path.Combine(UploadFolder, UniqueFileName);
+            return new FileStreamResult(new FileStream(UploadPath, FileMode.Open), "application/pdf");
+        }
     }
 }

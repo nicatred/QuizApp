@@ -14,9 +14,12 @@ namespace Quiz_Application.Services.Repository.Interfaces
     {
         //Task<QuestionFormDto> GetExam(int id);
         //Task<IQueryable<QuestionFormDto>> SearchExam(Expression<Func<QuestionFormDto, bool>> search = null);
-        Task AddQuestion(QuestionFormDto entity);
+        Task AddQuestion(NewQuestion entity);
+        Task Edit(QuestionAndChoises entity);
         Task DeleteQuestion(int questionId);
         Task<List<QuestionAndChoises>> GetQuestionAndChoises ();
+        Task<List<Exam>> GetExams ();
+        Task AddExam (Exam exam);
 
         //Task<IEnumerable<QuestionFormDto>> GetExamList();
 
