@@ -14,10 +14,14 @@ namespace Quiz_Application.Services.Repository.Base
     {
         private readonly QuizDBContext _dbContext;
         private DbSet<TEntity> _dbSet;
+        private DbSet<Result> _dbSetResult;
+        private DbSet<Exam> _examSet;
         public ResultService(QuizDBContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<TEntity>();
+            _dbSetResult = dbContext.Set<Result>();
+            _examSet = dbContext.Set<Exam>();
         }
         public async Task<int> AddResult(List<TEntity> entity)
         {
@@ -45,7 +49,18 @@ namespace Quiz_Application.Services.Repository.Base
                 LEFT JOIN Exam E ON R.ExamID = E.ExamID
                 WHERE R.CandidateID ='" + argCandidateID + "' AND R.IsCorrent = 1"
                 +"GROUP BY R.SessionID, R.ExamID, E.Name, E.FullMarks, R.CreatedOn", argCandidateID).ToListAsync();
+               
+
+                foreach (var item in obj)
+                {
+                    int result = await _dbSetResult.Where(x => x.IsCorrent && x.ExamID == item.ExamID && x.SessionID == item.SessionID).CountAsync();
+                    int allResult = await _dbSetResult.Where( x=>x.ExamID == item.ExamID && x.SessionID == item.SessionID).CountAsync();
+                    //var allResult = await _examSet.FirstOrDefaultAsync(x => x.ExamID == item.ExamID);
+                    item.Score = result + "/" + allResult;
+                }
                 return obj;
+
+
             }
             catch (Exception ex)
             {

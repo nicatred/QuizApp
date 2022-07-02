@@ -208,6 +208,9 @@ namespace Quiz_Application.Services.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImgFile")
                         .HasColumnType("nvarchar(max)");
 
@@ -245,6 +248,9 @@ namespace Quiz_Application.Services.Migrations
 
                     b.Property<int>("Sl_No")
                         .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");

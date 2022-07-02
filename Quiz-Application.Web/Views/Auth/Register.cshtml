@@ -122,8 +122,8 @@
 <body>
     <div class="signup-form">
         <form asp-action="Register" asp-controller="Auth" method="post">
-            <h2>Sign Up</h2>
-            <p>Please fill in this form to create an account!</p>
+            <h2>Qeydiyyat</h2>
+            <p>Qeydiyyat üçün aşağıdakı formu doldurun</p>
             <hr>
             <div class="form-group">
                 <div class="input-group">
@@ -132,7 +132,7 @@
                             <span class="fa fa-user"></span>
                         </span>
                     </div>
-                    <input asp-for="Name" class="form-control" placeholder="Candidate Name" required="required" />
+                    <input asp-for="Name" class="form-control" placeholder="Ad" required="required" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
@@ -143,7 +143,7 @@
                             <i class="fa fa-paper-plane"></i>
                         </span>
                     </div>
-                    <input asp-for="Email" class="form-control" placeholder="Email Address" required="required" />
+                    <input asp-for="Email" class="form-control" placeholder="E-poçt" required="required" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                             <i class="fa fa-id-card"></i>
                         </span>
                     </div>
-                    <input asp-for="Candidate_ID" class="form-control" placeholder="Candidate ID" required="required" />
+                    <input asp-for="Candidate_ID" class="form-control" placeholder="Fin" required="required" />
                     <span asp-validation-for="Candidate_ID" class="text-danger"></span>
                 </div>
             </div>
@@ -165,7 +165,7 @@
                             <i class="fa fa-phone"></i>
                         </span>
                     </div>
-                    <input asp-for="PhoneNumber" class="form-control" placeholder="Phone" required="required" />
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Telefon" required="required" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
             </div>
@@ -176,7 +176,7 @@
                             <i class="fa fa-lock"></i>
                         </span>
                     </div>
-                    <input asp-for="Password" class="form-control" placeholder="Password" required="required">
+                    <input asp-for="Password" class="form-control" placeholder="Şifrə" required="required">
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
@@ -188,26 +188,26 @@
                             <i class="fa fa-check"></i>
                         </span>
                     </div>
-                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" required="required">
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Şifrəni təstiqləyin" required="required">
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="form-check-label"><input type="checkbox" asp-for="Policy" required="required" /> I accept the <a href="https://www.cognizant.com/about-cognizant-resources/code-of-ethics.pdf">Terms of Use &amp; Privacy Policy</a></label>
+                <label class="form-check-label"><input type="checkbox" asp-for="Policy" required="required" value="true" hidden/></label>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                <button type="submit" class="btn btn-primary btn-lg">Qeydiyyatdan keç</button>
             </div>
         </form>
         @if (TempData["Message"] != null)
         {
 <div class="form-group">
     <div class="alert alert-danger alert-dismissible">
-        <a class="close" data-dismiss="alert" aria-label="close">×</a>
-        <strong>Error !</strong>  @TempData["Message"]
+        <a class="close" data-dismiss="alert" aria-label="Bağla">×</a>
+        <strong>Səhvlik !</strong>  @TempData["Message"]
     </div>
 </div>}
-        <div class="text-center">Already have an account? <a asp-controller="Account" asp-action="Login">Login here</a></div>
+        <div class="text-center">Already have an account? <a asp-controller="Account" asp-action="Login">Giriş</a></div>
 
     </div>
 

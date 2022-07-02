@@ -1,17 +1,46 @@
-﻿@model List<QuestionAndChoises>
+﻿@model Task<List<QuestionAndChoises>>
 @{
     Layout = "_Layout";
 }
-<!-- Content Wrapper. Contains page content -->
-
-@foreach(var question in Model)
-{
-    <h1>@question.QuestionId</h1>
-    <h1>@question.Question</h1>
-    @foreach(var choice in question.Choices)
-    {
-        <li>@choice.DisplayText</li>
-    }
-
+@{
+    ViewData["Title"] = "Admin-Suallar";
 }
 
+<div class="row">
+    @foreach (var question in await Model)
+    {
+        <div class="col-lg-10">
+            <h5></h5>
+            <h4>@question.QuestionId.@question.Question</h4>
+            @foreach (var choice in question.Choices)
+            {
+                if (choice.ChoiceID == question.AnsweId)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="@choice.ChoiceID" id="@question.QuestionId.ToString()+@choice.ChoiceID.ToString()" value="@choice.ChoiceID" checked>
+                        <label class="form-check-label" for="@choice.ChoiceID">
+                            @choice.DisplayText
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="@choice.ChoiceID" id="@question.QuestionId.ToString()+@choice.ChoiceID.ToString()" value="@choice.ChoiceID">
+                        <label class="form-check-label" for="@choice.ChoiceID">
+                            @choice.DisplayText
+                        </label>
+                    </div>
+                }
+            }
+        </div>
+
+        @*<div class="col-lg-1">
+            <a class="" asp-action="ChangeQuestion" asp-route-id="@question.QuestionId">Dəyişdir</a>
+        </div>*@
+        <div class="col-lg-1">
+            <a asp-action="DeleteQuestion" asp-route-id="@question.QuestionId">Sil</a>
+        </div>
+    }
+
+</div>

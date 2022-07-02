@@ -97,7 +97,7 @@ $(document).ready(function () {
         url: "/api/Exams",
         data: "{}",
         success: function (data) {
-           var string = '<option value="-1">--- Please Select ---</option>';
+           var string = '<option value="-1">--- Seçim edin ---</option>';
            for (var i = 0; i < data.length; i++) { string += '<option value="' + data[i].examID + '">' + data[i].name + '</option>'; }
             $("#ddlExam").html(string);
         }
@@ -143,7 +143,7 @@ $(document).ready(function () {
             var Ostring = "<div style='padding: 5px;' id='eqOption'>";
             $('#eqCount').html("(" + count + " of " + qIndex + ")");
             $('div#eqMain h3').html(objData.exam + " Quiz");
-            $('div#eqMain h4').html("Question " + count + " : " + objData.questions[index].questionText);
+            $('div#eqMain h4').html("Sual " + count + " : " + objData.questions[index].questionText);
             QuestionID = objData.questions[index].questionID;
             AnswerID = objData.questions[index].answer.optionID;
             let obj = result.find(o => o.QuestionID === QuestionID);                         
@@ -183,7 +183,7 @@ $(document).ready(function () {
             var Ostring = "<div style='padding: 5px;' id='eqOption'>";
             $('#eqCount').html("(" + count + " of " + qIndex + ")");
             $('div#eqMain h3').html(objData.exam + " Quiz");
-            $('div#eqMain h4').html("Question " + count + " : " + objData.questions[index].questionText);
+            $('div#eqMain h4').html("Sual " + count + " : " + objData.questions[index].questionText);
             QuestionID = objData.questions[index].questionID;
             AnswerID = objData.questions[index].answer.optionID;
             let obj = result.find(o => o.QuestionID === QuestionID);
@@ -234,8 +234,8 @@ $(document).ready(function () {
     $('#btnSubmit').click(function () {              
         $.confirm({
             icon: 'fa fa-warning',
-            title: 'Submit Quiz',
-            content: 'Are you sure you want to submit the quiz ?',
+            title: 'Cavabları göndər',
+            content: 'Testi cavablarını göndərməyə əminsiniz ? ',
             type: 'orange',
             closeIcon: true,
             closeIconClass: 'fa fa-close',
@@ -363,7 +363,7 @@ $(document).ready(function () {
                 qIndex = data.questions.length;
                 $('#eqCount').html("(1" + " of " + qIndex + ")");
                 $('div#eqMain h3').html(data.exam + " Quiz");
-                $('div#eqMain h4').html("Question 1 : " + data.questions[0].questionText);
+                $('div#eqMain h4').html("Sual 1 : " + data.questions[0].questionText);
                 QuestionID = data.questions[0].questionID;
                 AnswerID = data.questions[0].answer.optionID;
                 for (var i in data.questions[0].options) {

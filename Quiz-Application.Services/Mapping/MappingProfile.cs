@@ -15,6 +15,7 @@ namespace Business.Mapping
         public MappingProfile()
         {
             CreateMap<RegisterDto, Candidate>().ReverseMap();
+            CreateMap<UserRegisterDto, Candidate>().ReverseMap();
         }
     }
 }

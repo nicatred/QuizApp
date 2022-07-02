@@ -17,12 +17,15 @@ namespace Quiz_Application.Services.Entities
         [Column(TypeName = "varchar(250)")]
         public string Name { get; set; }
 
+        public string Surname { get; set; }
+
         [Column(TypeName = "varchar(20)")]
         public string Candidate_ID { get; set; }
 
         [Column(TypeName = "varchar(250)")]
         public string Password { get; set; }
         [MaxLength]
-        public string ImgFile { get; set; }        
+        public string ImgFile { get; set; }
+        public string Gender { get; set; }
     }
 }

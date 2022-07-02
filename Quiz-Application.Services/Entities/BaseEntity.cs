@@ -10,7 +10,7 @@ namespace Quiz_Application.Services.Entities
 {
     public class BaseEntity
     {            
-       
+        
         [Column(TypeName = "datetime")]
         [DataType(DataType.DateTime)]
         public DateTime? CreatedOn { get; set; }

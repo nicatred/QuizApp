@@ -56,9 +56,7 @@ namespace Business.Concrete
             var mappedEntity = _mapper.Map<RegisterDto, Candidate>(registerDto);
             mappedEntity.UserName =  registerDto.Candidate_ID;
             var result = await _userManager.CreateAsync(mappedEntity, registerDto.Password);
-              
-            //var resultaa =   await _roleManager.CreateAsync(new IdentityRole("candidate"));
-            //var roles = await _roleManager.Roles.ToListAsync();
+           
             await _userManager.AddToRoleAsync(mappedEntity, "candidate");
             return result.Succeeded;
         }
